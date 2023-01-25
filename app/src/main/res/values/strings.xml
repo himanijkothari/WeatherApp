@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
     <string name="label_weathers">Weathers</string>
+    <string name="screen_weather">Weather</string>
+    <string name="screen_forecast">Forecast</string>
+    <string name="screen_menu">Menu</string>
 </resources>
