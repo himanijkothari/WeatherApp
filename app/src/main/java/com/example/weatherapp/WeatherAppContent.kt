@@ -1,6 +1,5 @@
 package com.example.weatherapp
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -21,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.weatherapp.ui.screens.WeatherScreen
+import com.example.weatherapp.ui.Navigation.WeatherNavGraph
 import com.example.weatherapp.ui.theme.Darktheme
-
 
 @Composable
 fun WeatherAppContent() {
@@ -58,7 +56,7 @@ fun WeatherAppContent() {
             }
         } }
     ) {
-        WeatherScreen()
+        WeatherNavGraph(navController)
     }
 }
 
@@ -74,9 +72,10 @@ fun NavButton(
             .padding(8.dp)
             .size(82.dp)
             .clickable(
-              indication = null,
-              interactionSource = remember { MutableInteractionSource() },
-              onClick = onClick)
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
     ) {
         Column(
             modifier = Modifier
@@ -100,5 +99,4 @@ fun NavButton(
             )
         }
     }
-
 }
