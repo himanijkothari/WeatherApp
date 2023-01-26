@@ -1,7 +1,5 @@
 package com.example.weatherapp.ui.screens
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -9,22 +7,19 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.weatherapp.R
 import com.example.weatherapp.ui.theme.Blue100
 import com.example.weatherapp.ui.theme.Darktheme
 
 @Composable
-fun HomeScreen(){
+fun WeatherScreen(){
     
     Column(
         modifier = Modifier
@@ -57,9 +52,9 @@ fun HomeScreen(){
                     )
                 }
 
-                Canvas(modifier = Modifier.size(50.dp), onDraw = {
+               /* Canvas(modifier = Modifier.size(50.dp), onDraw = {
                     drawCircle(color = Color.Yellow)
-                })
+                })*/
             }
 
             Row() {
