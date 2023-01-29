@@ -14,7 +14,7 @@ class AuthInterceptor: Interceptor{
             val url = request
                 .url
                 .newBuilder()
-                .addQueryParameter("api_key","ErAQRd0GHPtWs5Fa7Nfa3LMUq8n67XvN")
+                .addQueryParameter("apikey","ErAQRd0GHPtWs5Fa7Nfa3LMUq8n67XvN")
                 .build()
             request = request.newBuilder().url(url).build()
             return chain.proceed(request)

@@ -1,5 +1,6 @@
 package com.example.weatherapp
 
+import com.example.weatherapp.data.controller.TextController
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,9 @@ object AppModule  {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder().build()
+    fun provideMoshi(): Moshi = Moshi
+        .Builder()
+        .build()
 
     @Provides
     @Singleton
@@ -33,11 +36,16 @@ object AppModule  {
             .build()
     }
 
-
+    @Singleton
+    @Provides
     fun provideRetrofit( httpClient: OkHttpClient, moshi: Moshi): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl("https://dataservice.accuweather.com/")
             .client(httpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+
+    @Provides
+    @Singleton
+    fun provideTextController(retrofit: Retrofit) = retrofit.create(TextController::class.java)
 }

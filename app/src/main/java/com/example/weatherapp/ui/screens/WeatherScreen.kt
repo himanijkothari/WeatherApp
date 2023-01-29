@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,22 +20,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weatherapp.WeatherViewModel
+import com.example.weatherapp.data.model.City
 import com.example.weatherapp.testForeCast
 import com.example.weatherapp.ui.theme.Blue100
 import com.example.weatherapp.ui.theme.Darktheme
 import com.example.weatherapp.ui.widget.DailyForecastCard
 
 @Composable
-fun WeatherScreen(){
+fun WeatherScreen(weatherViewModel: WeatherViewModel) {
+
+    val locationKey = produceState<List<City>?>(initialValue = null){
+        value = weatherViewModel.getLocationKey()
+    }
 
     Column(
-        modifier=Modifier
+        modifier= Modifier
             .fillMaxSize()
             .background(Darktheme)
     ){
         Column(
-            modifier=Modifier
-                .padding(top=32.dp,start=16.dp,end=16.dp,bottom=32.dp)
+            modifier= Modifier
+                .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
         ){
             Row(
@@ -49,13 +56,16 @@ fun WeatherScreen(){
                         modifier=Modifier.size(20.dp),
                         tint=Color.White
                     )
-                    Text(
-                        text="Secunderabad,Telangana",
-                        color=Color.LightGray,
-                        fontSize=12.sp,
-                        fontWeight=FontWeight.Bold,
-                        style=MaterialTheme.typography.subtitle2
-                    )
+                    locationKey.value?.toString()?.let {
+                        Text(
+                            text= it.length.toString(),
+                            color=Color.LightGray,
+                            fontSize=12.sp,
+                            fontWeight=FontWeight.Bold,
+                            style=MaterialTheme.typography.subtitle2
+                        )
+                    }
+
                 }
             }
 
@@ -89,8 +99,8 @@ fun WeatherScreen(){
         )
 
         Column(
-            modifier=Modifier
-                .padding(top=32.dp,start=32.dp,end=16.dp,bottom=32.dp)
+            modifier= Modifier
+                .padding(top = 32.dp, start = 32.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
         ){
             Row(
@@ -150,9 +160,9 @@ fun WeatherScreen(){
         }
 
         LazyRow(
-            modifier=Modifier
+            modifier= Modifier
                 .fillMaxWidth()
-                .padding(bottom=16.dp)
+                .padding(bottom = 16.dp)
                 .clip(RoundedCornerShape(16.dp)),
             contentPadding=PaddingValues(16.dp),
             horizontalArrangement=Arrangement.spacedBy(8.dp)
