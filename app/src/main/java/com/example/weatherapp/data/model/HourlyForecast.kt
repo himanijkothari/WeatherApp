@@ -12,6 +12,14 @@ data class HourlyForecast (
     val iconphrase : String,
     @Json(name="Temperature")
     val temperature : Temperature,
+    @Json(name="Wind")
+    val wind : Wind,
+    @Json(name="RelativeHumidity")
+    val humidity : String,
+    @Json(name="PrecipitationProbability")
+    val precipitation : String,
+    @Json(name="RainProbability")
+    val chanceOfRain : String,
 )
 
 @JsonClass(generateAdapter = true)
@@ -23,5 +31,22 @@ data class Temperature (
     val unit : String
 )
 
+
+@JsonClass(generateAdapter = true)
+data class Wind(
+
+    @Json(name="Speed")
+    val speed: Speed
+)
+
+
+@JsonClass(generateAdapter = true)
+data class Speed(
+
+    @Json(name="Value")
+    val value: String,
+    @Json(name="Unit")
+    val unit : String
+)
 
 

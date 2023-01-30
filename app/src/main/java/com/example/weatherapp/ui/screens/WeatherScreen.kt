@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapp.WeatherViewModel
 import com.example.weatherapp.data.model.City
+import com.example.weatherapp.data.model.HourlyForecast
 import com.example.weatherapp.testForeCast
 import com.example.weatherapp.ui.theme.Blue100
 import com.example.weatherapp.ui.theme.Darktheme
@@ -30,146 +31,152 @@ import com.example.weatherapp.ui.widget.DailyForecastCard
 @Composable
 fun WeatherScreen(weatherViewModel: WeatherViewModel) {
 
-    val locationKey = produceState<List<City>?>(initialValue = null){
-        value = weatherViewModel.getLocationKey()
+    val forecastResult = produceState<List<HourlyForecast>?>(initialValue = null ){
+        value = weatherViewModel.getHourlyForecast("310004")
     }
+
+    val currentForecastResult = forecastResult.value?.get(0)
 
     Column(
         modifier= Modifier
             .fillMaxSize()
             .background(Darktheme)
-    ){
+    ) {
         Column(
-            modifier= Modifier
+            modifier = Modifier
                 .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
-        ){
+        ) {
             Row(
-                modifier=Modifier.fillMaxWidth(),
-                horizontalArrangement=Arrangement.SpaceBetween,
-                verticalAlignment=Alignment.CenterVertically
-            ){
-                Row(){
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row() {
                     Icon(
                         Icons.Filled.LocationOn,
-                        contentDescription=null,
-                        modifier=Modifier.size(20.dp),
-                        tint=Color.White
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.White
                     )
-                    locationKey.value?.toString()?.let {
-                        Text(
-                            text= it.length.toString(),
-                            color=Color.LightGray,
-                            fontSize=12.sp,
-                            fontWeight=FontWeight.Bold,
-                            style=MaterialTheme.typography.subtitle2
-                        )
-                    }
 
+                    Text(
+                        text = "31004",
+                        color = Color.LightGray,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.subtitle2
+                    )
                 }
             }
 
-            Row(){
+            Row() {
                 Column(
-                    modifier=Modifier.padding(start=16.dp)
-                ){
-                    Text(
-                        text="28",
-                        color=Color.White,
-                        fontWeight=FontWeight.Bold,
-                        style=MaterialTheme.typography.h1
+                    modifier = Modifier.padding(start = 16.dp)
+                ) {
 
-                    )
-                    Text(
-                        text="Sunny",
-                        color=Color.Blue
-                    )
-                    Text(
-                        text="Lastupdated:9:00PM",
-                        color=Color.White
-                    )
+                    if (currentForecastResult != null) {
+                        Text(
+                            text = "${currentForecastResult.temperature.value}°",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.h1
+
+                        )
+                        Text(
+                            text = currentForecastResult.iconphrase,
+                            color = Color.Blue
+                        )
+                    }
+
+
                 }
             }
         }
 
         Divider(
-            color=Blue100,
-            modifier=Modifier
+            color = Blue100,
+            modifier = Modifier
                 .height(1.dp)
         )
 
         Column(
-            modifier= Modifier
+            modifier = Modifier
                 .padding(top = 32.dp, start = 32.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
-        ){
+        ) {
             Row(
-                modifier=Modifier.fillMaxWidth(),
-                verticalAlignment=Alignment.CenterVertically
-            ){
-                Column(){
-                    Text(
-                        text="Chancesofrain:",
-                        color=Color.LightGray,
-                        style=MaterialTheme.typography.subtitle2
-                    )
-                    Text(
-                        text="16%",
-                        color=Color.White,
-                        style=MaterialTheme.typography.h5
-                    )
-                    Spacer(modifier=Modifier.height(32.dp))
-                    Text(
-                        text="Wind:",
-                        color=Color.LightGray,
-                        style=MaterialTheme.typography.subtitle2
-                    )
-                    Text(
-                        text="1.2km/hr",
-                        color=Color.White,
-                        style=MaterialTheme.typography.h5
-                    )
-                }
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (currentForecastResult != null) {
+                    Column() {
+                        Text(
+                            text = "Chances of rain:",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                        Text(
+                            text = "${currentForecastResult.chanceOfRain} %",
+                            color = Color.White,
+                            style = MaterialTheme.typography.h5
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            text = "Wind:",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                        Text(
+                            text = "${currentForecastResult.wind.speed.value} ${currentForecastResult.wind.speed.unit}",
+                            color = Color.White,
+                            style = MaterialTheme.typography.h5
+                        )
+                    }
 
-                Spacer(modifier=Modifier.width(80.dp))
+                    Spacer(modifier = Modifier.width(80.dp))
 
-                Column(){
-                    Text(
-                        text="Precipitation",
-                        color=Color.LightGray,
-                        style=MaterialTheme.typography.subtitle2
-                    )
-                    Text(
-                        text="28%",
-                        color=Color.White,
-                        style=MaterialTheme.typography.h5
-                    )
-                    Spacer(modifier=Modifier.height(32.dp))
-                    Text(
-                        text="Humidity:",
-                        color=Color.LightGray,
-                        style=MaterialTheme.typography.subtitle2
-                    )
-                    Text(
-                        text="52%",
-                        color=Color.White,
-                        style=MaterialTheme.typography.h5
-                    )
+                    Column() {
+                        Text(
+                            text = "Precipitation",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                        Text(
+                            text = "${currentForecastResult.precipitation} %",
+                            color = Color.White,
+                            style = MaterialTheme.typography.h5
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            text = "Humidity:",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                        Text(
+                            text = "${currentForecastResult.humidity} %",
+                            color = Color.White,
+                            style = MaterialTheme.typography.h5
+                        )
+                    }
                 }
             }
         }
 
         LazyRow(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
                 .clip(RoundedCornerShape(16.dp)),
-            contentPadding=PaddingValues(16.dp),
-            horizontalArrangement=Arrangement.spacedBy(8.dp)
-        ){
-            items(testForeCast){forecast->
-                DailyForecastCard(forecast)
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            forecastResult.value?.let {
+                items(it) { forecast ->
+                    DailyForecastCard(forecast)
+                }
             }
         }
     }
+
 }

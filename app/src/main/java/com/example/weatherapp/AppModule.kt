@@ -1,5 +1,6 @@
 package com.example.weatherapp
 
+import com.example.weatherapp.data.controller.ForecastController
 import com.example.weatherapp.data.controller.TextController
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -48,4 +49,8 @@ object AppModule  {
     @Provides
     @Singleton
     fun provideTextController(retrofit: Retrofit) = retrofit.create(TextController::class.java)
+
+    @Provides
+    @Singleton
+    fun provideForecastController(retrofit: Retrofit) = retrofit.create(ForecastController::class.java)
 }
