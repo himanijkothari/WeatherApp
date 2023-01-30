@@ -18,9 +18,9 @@ data class DailyForecasts(
     @Json(name="Temperature")
     val temperature: DailyTemperature,
     @Json(name="Day")
-    val day: Day,
+    val day: IconObject,
     @Json(name="Night")
-    val night: Night
+    val night: IconObject
 )
 
 @JsonClass(generateAdapter = true)
@@ -33,15 +33,7 @@ data class DailyTemperature (
 )
 
 @JsonClass(generateAdapter = true)
-data class Day(
-    @Json(name="Icon")
-    val icon: Int,
-    @Json(name="IconPhrase")
-    val iconPhrase: String
-)
-
-@JsonClass(generateAdapter = true)
-data class Night(
+data class IconObject(
     @Json(name="Icon")
     val icon: Int,
     @Json(name="IconPhrase")

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapp.WeatherViewModel
 import com.example.weatherapp.data.model.City
+import com.example.weatherapp.data.model.CurrentWeather
 import com.example.weatherapp.data.model.HourlyForecast
 import com.example.weatherapp.testForeCast
 import com.example.weatherapp.ui.theme.Blue100
@@ -35,14 +36,16 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
         value = weatherViewModel.getHourlyForecast("310004")
     }
 
-    val currentForecastResult = forecastResult.value?.get(0)
+    val currentForecastResult = produceState<List<CurrentWeather>?>(initialValue = null ){
+        value = weatherViewModel.getCurrentWeather("310004")
+    }
 
     Column(
         modifier= Modifier
             .fillMaxSize()
             .background(Darktheme)
     ) {
-        Column(
+       Column(
             modifier = Modifier
                 .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
@@ -75,21 +78,19 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
 
-                    if (currentForecastResult != null) {
+                    currentForecastResult.value?.get(0)?.let {
                         Text(
-                            text = "${currentForecastResult.temperature.value}°",
+                            text = "${it.temperature.metric.value}°",
                             color = Color.White,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.h1
 
                         )
                         Text(
-                            text = currentForecastResult.iconphrase,
+                            text = it.weatherText,
                             color = Color.Blue
                         )
                     }
-
-
                 }
             }
         }
@@ -100,7 +101,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 .height(1.dp)
         )
 
-        Column(
+       Column(
             modifier = Modifier
                 .padding(top = 32.dp, start = 32.dp, end = 16.dp, bottom = 32.dp)
                 .fillMaxWidth()
@@ -109,26 +110,26 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (currentForecastResult != null) {
+                 currentForecastResult.value?.get(0)?.let {
                     Column() {
-                        Text(
-                            text = "Chances of rain:",
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.subtitle2
-                        )
-                        Text(
-                            text = "${currentForecastResult.chanceOfRain} %",
-                            color = Color.White,
-                            style = MaterialTheme.typography.h5
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = "Wind:",
                             color = Color.LightGray,
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
-                            text = "${currentForecastResult.wind.speed.value} ${currentForecastResult.wind.speed.unit}",
+                            text = "${it.wind.speed.metric.value} ${it.wind.speed.metric.unit}",
+                            color = Color.White,
+                            style = MaterialTheme.typography.h5
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            text = "Feels like:",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                        Text(
+                            text = "${it.feelTemperature.metric.value} ${it.feelTemperature.metric.unit}",
                             color = Color.White,
                             style = MaterialTheme.typography.h5
                         )
@@ -143,7 +144,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
-                            text = "${currentForecastResult.precipitation} %",
+                            text = "${it.precipitationSummary.precipitation.metric.value} ${it.precipitationSummary.precipitation.metric.unit}",
                             color = Color.White,
                             style = MaterialTheme.typography.h5
                         )
@@ -154,12 +155,12 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
-                            text = "${currentForecastResult.humidity} %",
+                            text = "${it.humidity} %",
                             color = Color.White,
                             style = MaterialTheme.typography.h5
                         )
                     }
-                }
+                    }
             }
         }
 

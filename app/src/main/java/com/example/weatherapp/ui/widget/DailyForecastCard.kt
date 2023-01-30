@@ -36,7 +36,7 @@ fun DailyForecastCard(forecast:HourlyForecast){
                 color=Color.LightGray
             )
             Text(
-                text=forecast.temperature.value,
+                text=forecast.temperature.value.toString(),
                 color=Color.LightGray
             )
             Icon(

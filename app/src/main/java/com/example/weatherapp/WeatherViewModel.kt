@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.controller.ForecastController
 import com.example.weatherapp.data.controller.TextController
 import com.example.weatherapp.data.model.City
+import com.example.weatherapp.data.model.CurrentWeather
 import com.example.weatherapp.data.model.DayForecast
 import com.example.weatherapp.data.model.HourlyForecast
 import dagger.hilt.android.HiltAndroidApp
@@ -23,6 +24,16 @@ class WeatherViewModel @Inject constructor(
         withContext(viewModelScope.coroutineContext + Dispatchers.IO){
             val response = textController.getLocationKey(cityName)
             if(response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        }
+
+    suspend fun getCurrentWeather(locationKey: String) : List<CurrentWeather>? =
+        withContext(viewModelScope.coroutineContext + Dispatchers.IO){
+            val response = forecastController.getCurrentWeather(locationKey)
+            if(response.isSuccessful){
                 response.body()
             } else {
                 null

@@ -27,9 +27,9 @@ fun ForecastScreen(weatherViewModel: WeatherViewModel) {
             .fillMaxSize()
             .background(Darktheme)
     ){
-        weeklyForecastResult.value?.let {
-            items(it.dailyforecast){
-                WeeklyForeCastCard(it)
+        weeklyForecastResult.value?.let { it ->
+            items(it.dailyforecast){ it1 ->
+                WeeklyForeCastCard(it1)
             }
         }
     }
