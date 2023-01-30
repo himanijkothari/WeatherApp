@@ -30,7 +30,7 @@ fun WeatherNavGraph(navController: NavHostController, weatherViewModel: WeatherV
                 Forecast.route,
                 arguments = Forecast.arguments
             ){
-                ForecastScreen()
+                ForecastScreen(weatherViewModel)
             }
 
             composable(
