@@ -24,7 +24,7 @@ import com.example.weatherapp.ui.Navigation.WeatherNavGraph
 import com.example.weatherapp.ui.theme.Darktheme
 
 @Composable
-fun WeatherAppContent() {
+fun WeatherAppContent(weatherViewModel: WeatherViewModel) {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -56,7 +56,7 @@ fun WeatherAppContent() {
             }
         } }
     ) {
-        WeatherNavGraph(navController)
+        WeatherNavGraph(navController, weatherViewModel)
     }
 }
 

@@ -14,9 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.weatherapp.ForecastTemp
+import com.example.weatherapp.data.model.HourlyForecast
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun DailyForecastCard(forecast:ForecastTemp){
+fun DailyForecastCard(forecast:HourlyForecast){
+
+    val date = forecast.datetime.substringAfter("T").substring(0,5)
 
     Card(
         shape=RoundedCornerShape(16.dp),
@@ -27,11 +32,11 @@ fun DailyForecastCard(forecast:ForecastTemp){
             verticalArrangement=Arrangement.Center
         ){
             Text(
-                text=forecast.time,
+                text= date,
                 color=Color.LightGray
             )
             Text(
-                text=forecast.temperature,
+                text=forecast.temperature.value.toString(),
                 color=Color.LightGray
             )
             Icon(
