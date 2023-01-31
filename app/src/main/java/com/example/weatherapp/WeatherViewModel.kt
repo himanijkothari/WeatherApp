@@ -8,7 +8,6 @@ import com.example.weatherapp.data.model.City
 import com.example.weatherapp.data.model.CurrentWeather
 import com.example.weatherapp.data.model.DayForecast
 import com.example.weatherapp.data.model.HourlyForecast
-import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,9 +19,9 @@ class WeatherViewModel @Inject constructor(
     private val forecastController: ForecastController
 ) : ViewModel() {
 
-    suspend fun getLocationKey(cityName : String) : List<City>? =
+    suspend fun getSuggestedCities(cityName : String) : List<City>? =
         withContext(viewModelScope.coroutineContext + Dispatchers.IO){
-            val response = textController.getLocationKey(cityName)
+            val response = textController.getSearchedCityNames(cityName)
             if(response.isSuccessful) {
                 response.body()
             } else {

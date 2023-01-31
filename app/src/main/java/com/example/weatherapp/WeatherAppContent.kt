@@ -29,7 +29,7 @@ fun WeatherAppContent(weatherViewModel: WeatherViewModel) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val bottomTabRoutes = listOf(Weather,Forecast, Menu)
+    val bottomTabRoutes = listOf(Weather, Menu)
     
     Scaffold(
         bottomBar = { BottomAppBar(

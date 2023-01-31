@@ -8,9 +8,6 @@ import retrofit2.http.Query
 interface TextController {
 
     @GET("locations/v1/cities/search")
-    suspend fun getLocationKey(@Query("q") q : String ) : Response<List<City>>
-
-    @GET("locations/v1/search")
-    suspend fun getSearchedLocation(@Query("q") q: String) : Response<List<City>>
+    suspend fun getSearchedCityNames(@Query("q") q : String ) : Response<List<City>>
 
 }
