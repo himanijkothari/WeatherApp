@@ -1,10 +1,6 @@
 package com.example.weatherapp
 
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.NamedNavArgument
 
 
@@ -16,7 +12,7 @@ sealed class Screens(
 )
 
 object Weather: Screens(
-    route = "Weather",
+    route = "Weather/{locationKey}",
     resourceId = R.string.screen_weather
 )
 

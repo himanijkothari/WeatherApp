@@ -21,23 +21,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapp.WeatherViewModel
-import com.example.weatherapp.data.model.City
 import com.example.weatherapp.data.model.CurrentWeather
 import com.example.weatherapp.data.model.HourlyForecast
-import com.example.weatherapp.testForeCast
 import com.example.weatherapp.ui.theme.Blue100
 import com.example.weatherapp.ui.theme.Darktheme
 import com.example.weatherapp.ui.widget.DailyForecastCard
 
 @Composable
-fun WeatherScreen(weatherViewModel: WeatherViewModel) {
+fun WeatherScreen(locationKey: String,weatherViewModel: WeatherViewModel) {
 
-    val forecastResult = produceState<List<HourlyForecast>?>(initialValue = null ){
-        value = weatherViewModel.getHourlyForecast("310004")
+   val forecastResult = produceState<List<HourlyForecast>?>(initialValue = null ){
+        value = weatherViewModel.getHourlyForecast(locationKey)
     }
 
     val currentForecastResult = produceState<List<CurrentWeather>?>(initialValue = null ){
-        value = weatherViewModel.getCurrentWeather("310004")
+        value = weatherViewModel.getCurrentWeather(locationKey)
     }
 
     Column(
@@ -64,7 +62,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                     )
 
                     Text(
-                        text = "31004",
+                        text = locationKey,
                         color = Color.LightGray,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
@@ -179,5 +177,4 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
             }
         }
     }
-
 }
