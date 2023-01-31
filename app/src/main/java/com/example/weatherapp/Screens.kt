@@ -17,7 +17,7 @@ object Weather: Screens(
 )
 
 object Forecast: Screens(
-    route = "Forecast",
+    route = "Forecast/{locationKey}",
     resourceId = R.string.screen_forecast
 )
 

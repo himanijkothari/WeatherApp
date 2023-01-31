@@ -27,7 +27,8 @@ fun WeatherNavGraph(navController: NavHostController, weatherViewModel: WeatherV
                 locationKey?.let {
                     WeatherScreen(
                         locationKey,
-                        weatherViewModel
+                        weatherViewModel,
+                        navController
                     )
                 }
             }
@@ -36,7 +37,13 @@ fun WeatherNavGraph(navController: NavHostController, weatherViewModel: WeatherV
                 Forecast.route,
                 arguments = Forecast.arguments
             ){
-                ForecastScreen(weatherViewModel)
+                val locationKey = it.arguments?.getString("locationKey")
+                locationKey?.let{
+                    ForecastScreen(
+                        locationKey,
+                        weatherViewModel)
+                }
+
             }
 
             composable(
