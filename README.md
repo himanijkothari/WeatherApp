@@ -3,6 +3,7 @@
 ## :scroll: Description
  * This App enables users to get weather information for the specific location.
  * Based on [Jetpack Compose](https://developer.android.com/jetpack/compose) and [accuWeather API](https://developer.accuweather.com/apis)
+ * Note : Accuweather allows only 50 API calls per day for a free subscription, so it might affect application performance.
  
 ## :bulb: Motivation and Context
 <img
