@@ -12,7 +12,7 @@ sealed class Screens(
 )
 
 object Weather: Screens(
-    route = "Weather/{locationKey}",
+    route = "Weather/{locationKey}/{cityName}",
     resourceId = R.string.screen_weather
 )
 

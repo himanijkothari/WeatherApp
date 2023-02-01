@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,10 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.weatherapp.R
 import com.example.weatherapp.WeatherViewModel
 import com.example.weatherapp.data.model.City
 import com.example.weatherapp.ui.theme.Darktheme
@@ -30,10 +33,8 @@ fun MenuScreen(
 ) {
 
     var textState by remember { mutableStateOf("") }
-    val coroutinescope = rememberCoroutineScope()
-    val cities = remember {
-        mutableStateOf(emptyList<City>())
-    }
+    val coroutineScope = rememberCoroutineScope()
+    val cities = remember { mutableStateOf(emptyList<City>()) }
 
     Column(
         modifier = Modifier
@@ -42,20 +43,24 @@ fun MenuScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 16.dp,end = 16.dp)
+                .padding(start = 16.dp,top = 32.dp,end = 16.dp)
         ) {
-
+            Text(
+                text = stringResource(id = R.string.label_weathers),
+                color = Color.LightGray,
+                style = MaterialTheme.typography.h5
+            )
             TextField(
                 value = textState,
                 onValueChange = { value ->
                     textState = value
-                    coroutinescope.launch {
+                    coroutineScope.launch {
                         cities.value = weatherViewModel.getSuggestedCities(textState)!!
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(top = 16.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 textStyle = TextStyle(color = Color.Black, fontSize = 18.sp),
                 leadingIcon = {
@@ -101,7 +106,7 @@ fun MenuScreen(
                 )
             )
 
-            cities.let { CityList(it.value , navController) }
+            CityList(cities.value , navController)
         }
     }
 }
@@ -110,29 +115,39 @@ fun MenuScreen(
 @Composable
 fun CityList( cities : List<City> , navController: NavController){
 
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+    ) {
         items(cities) { filteredCites ->
             CityListItem(
                 cityText = "${filteredCites.name}, ${filteredCites.adminArea.englishName}, ${filteredCites.country.englishName}",
-                onItemClick = { selectedCountry ->
-                    navController.navigate("Weather/${filteredCites.Key}")
+                onItemClick = {
+                    navController.navigate("Weather/${filteredCites.Key}/${filteredCites.name}")
                 }
             )
         }
     }
 }
+
 @Composable
 fun CityListItem(cityText: String, onItemClick: (String) -> Unit) {
+
     Row(
         modifier = Modifier
+            .border(1.dp,Color.Black)
             .clickable(onClick = { onItemClick(cityText) })
             .background(Color.White)
             .height(57.dp)
             .fillMaxWidth()
             .padding(PaddingValues(8.dp, 16.dp))
+
     ) {
-        Text(text = cityText, fontSize = 18.sp, color = Color.Black)
+        Text(
+            text = cityText,
+            fontSize = 18.sp,
+            color = Color.Black)
     }
 }
 

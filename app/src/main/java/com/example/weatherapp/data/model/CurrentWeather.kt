@@ -8,6 +8,8 @@ data class CurrentWeather (
 
     @Json(name="WeatherText")
     val weatherText : String,
+    @Json(name="WeatherIcon")
+    val weatherIcon : Int,
     @Json(name="Temperature")
     val temperature: Speed,
     @Json(name="RealFeelTemperature")
