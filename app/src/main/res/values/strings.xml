@@ -9,4 +9,9 @@
     <string name="label_wind">Wind</string>
     <string name="label_precipitation">Precipitation</string>
     <string name="label_humidity">Humidity</string>
+    <string name="label_date">Date</string>
+    <string name="label_H">H</string>
+    <string name="label_L">L</string>
+    <string name="label_day">Day</string>
+    <string name="label_night">Night</string>
 </resources>
