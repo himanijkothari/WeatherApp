@@ -2,8 +2,10 @@ package com.example.weatherapp.ui.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.weatherapp.Forecast
 import com.example.weatherapp.Menu
 import com.example.weatherapp.Weather
@@ -21,15 +23,22 @@ fun WeatherNavGraph(navController: NavHostController, weatherViewModel: WeatherV
         ){
             composable(
                 Weather.route,
-                arguments = Weather.arguments
+                arguments = listOf(
+                    navArgument("locationKey") { type = NavType.StringType },
+                    navArgument("cityName") { type = NavType.StringType },
+                )
             ){
                 val locationKey = it.arguments?.getString("locationKey")
+                val name = it.arguments?.getString("cityName")
                 locationKey?.let {
-                    WeatherScreen(
-                        locationKey,
-                        weatherViewModel,
-                        navController
-                    )
+                    if (name != null) {
+                        WeatherScreen(
+                            locationKey,
+                            name,
+                            weatherViewModel,
+                            navController
+                        )
+                    }
                 }
             }
 

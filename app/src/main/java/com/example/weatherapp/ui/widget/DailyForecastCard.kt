@@ -7,43 +7,44 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.weatherapp.ForecastTemp
+import com.example.weatherapp.IconMapping
 import com.example.weatherapp.data.model.HourlyForecast
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun DailyForecastCard(forecast:HourlyForecast){
 
     val date = forecast.datetime.substringAfter("T").substring(0,5)
+    val icon = IconMapping(forecast.weatherIcon)
 
     Card(
-        shape=RoundedCornerShape(16.dp),
-        backgroundColor=Color.DarkGray
+        shape = RoundedCornerShape(32.dp),
+        backgroundColor = Color.DarkGray
     ){
         Column(
-            modifier=Modifier.padding(16.dp),
-            verticalArrangement=Arrangement.Center
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             Text(
-                text= date,
-                color=Color.LightGray
-            )
-            Text(
-                text=forecast.temperature.value.toString(),
-                color=Color.LightGray
+                text = date,
+                color = Color.LightGray
             )
             Icon(
-                Icons.Rounded.Add,
-                contentDescription=null,
-                tint=Color.LightGray
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = Color.Unspecified
             )
+            Text(
+                text = forecast.temperature.value.toString()+"°",
+                color = Color.LightGray
+            )
+
         }
     }
 }

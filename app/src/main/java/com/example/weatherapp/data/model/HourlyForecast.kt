@@ -8,6 +8,8 @@ data class HourlyForecast (
 
     @Json(name="DateTime")
     val datetime : String,
+    @Json(name="WeatherIcon")
+    val weatherIcon : Int,
     @Json(name="IconPhrase")
     val iconphrase : String,
     @Json(name="Temperature")
